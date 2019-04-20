@@ -66,7 +66,9 @@ function TasksLogs(props) {
                             <TableCell>
                                 {
                                     Interval
-                                        .fromDateTimes(task.start, task.end)
+                                        .fromDateTimes(
+                                            DateTime.fromISO(task.start), DateTime.fromISO(task.end),
+                                        )
                                         .toDuration()
                                         .toFormat('hh:mm:ss')
                                 }

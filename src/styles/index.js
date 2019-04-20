@@ -36,4 +36,14 @@ export default {
     timerContainer: {
         marginBottom: '1.5rem',
     },
+    chartFooterContainer: {
+        justifyContent: 'justify-end',
+        textAlign: 'right',
+        padding: '1rem 0',
+    },
+    colors: {
+        red: redColor,
+        violet: violetColor,
+        teal: tealColor,
+    },
 };

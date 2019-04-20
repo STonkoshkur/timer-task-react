@@ -4,5 +4,20 @@ export const ROUTERS = {
     tasksChart: '/tasks/chart',
 };
 
-export const HOMEPAGE_LOGS_TAB_VALUE = 'LOGS';
-export const HOMEPAGE_CHART_TAB_VALUE = 'CHART';
+export const HOMEPAGE_TABS = {
+    logs: 'LOGS',
+    chart: 'CHART',
+};
+
+export const RANDOM_TASKS = {
+    minCount: 10,
+    maxCount: 15,
+
+    minDuration: 10,
+    maxDuration: 90,
+
+    minBreakDuration: 5,
+    maxBreakDuration: 30,
+
+    startHour: 8,
+};

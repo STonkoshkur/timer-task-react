@@ -3,8 +3,7 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 import {
     ROUTERS,
-    HOMEPAGE_LOGS_TAB_VALUE,
-    HOMEPAGE_CHART_TAB_VALUE,
+    HOMEPAGE_TABS,
 } from '../helpers/constants';
 
 /**
@@ -18,6 +17,7 @@ import Tab from '@material-ui/core/Tab';
 import AlertDialog from './AlertDialog';
 import TimerTask from './TimerTask';
 import TasksLogs from './TasksLogs';
+import TasksChart from './TasksChart';
 
 /**
  * Styles
@@ -34,8 +34,8 @@ class Home extends Component {
             location
             && location.pathname
             && location.pathname === ROUTERS.tasksChart
-            && HOMEPAGE_CHART_TAB_VALUE
-        ) || HOMEPAGE_LOGS_TAB_VALUE;
+            && HOMEPAGE_TABS.chart
+        ) || HOMEPAGE_TABS.logs;
 
         this.state = {
             selectedTab,
@@ -100,22 +100,22 @@ class Home extends Component {
                                 >
                                     <Tab
                                         label="Tasks logs"
-                                        value={HOMEPAGE_LOGS_TAB_VALUE}
+                                        value={HOMEPAGE_TABS.logs}
                                         className={classes.tab}
                                         component={RouterLink}
                                         to={ROUTERS.tasksLogs}
                                     />
                                     <Tab
                                         label="Tasks chart"
-                                        value={HOMEPAGE_CHART_TAB_VALUE}
+                                        value={HOMEPAGE_TABS.chart}
                                         className={classes.tab}
                                         component={RouterLink}
                                         to={ROUTERS.tasksChart}
                                     />
                                 </Tabs>
                             </AppBar>
-                            { selectedTab === HOMEPAGE_CHART_TAB_VALUE
-                                ? 'CHART'
+                            { selectedTab === HOMEPAGE_TABS.chart
+                                ? <TasksChart />
                                 : <TasksLogs />
                             }
                         </section>

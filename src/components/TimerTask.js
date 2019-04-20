@@ -22,12 +22,6 @@ class TimerTask extends Component {
     constructor(props) {
         super(props);
 
-        // this.state = {
-        //     taskName: '',
-        //     isTimerActive: false,
-        //     taskTimer: {},
-        // };
-
         this.handleTimerStart = this.handleTimerStart.bind(this);
         this.handleTimerStop = this.handleTimerStop.bind(this);
         this.handleTaskNameChange = this.handleTaskNameChange.bind(this);
@@ -53,7 +47,7 @@ class TimerTask extends Component {
 
         startTimer({
             name: timer.name || '',
-            start: DateTime.local(),
+            start: DateTime.local().toISO(),
         });
     }
 
@@ -72,7 +66,7 @@ class TimerTask extends Component {
             id: this.getTaskNextId(),
             name: timer.name,
             start: timer.startDateTime,
-            end: DateTime.local(),
+            end: DateTime.local().toISO(),
         });
     }
 
@@ -101,7 +95,7 @@ class TimerTask extends Component {
                 <div>
                     <Timer
                         isTimerActive={!!timer.isActive}
-                        startDateTime={timer.startDateTime}
+                        startDateTime={DateTime.fromISO(timer.startDateTime)}
                     />
                 </div>
                 <div>
