@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DateTime } from 'luxon';
 
-import {
-    addTask,
-} from '../actions/task';
+import { addTask } from '../actions/task';
+import { startTimer, stopTimer, updateName } from '../actions/timer';
 
 /**
  * Components
@@ -23,14 +22,15 @@ class TimerTask extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            taskName: '',
-            isTimerActive: false,
-            taskTimer: {},
-        };
+        // this.state = {
+        //     taskName: '',
+        //     isTimerActive: false,
+        //     taskTimer: {},
+        // };
 
         this.handleTimerStart = this.handleTimerStart.bind(this);
         this.handleTimerStop = this.handleTimerStop.bind(this);
+        this.handleTaskNameChange = this.handleTaskNameChange.bind(this);
         this.handleEmptyTaskError = this.handleEmptyTaskError.bind(this);
     }
 
@@ -42,47 +42,37 @@ class TimerTask extends Component {
             : 1;
     }
 
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
-    };
+    handleTaskNameChange(event) {
+        const { updateTaskName } = this.props;
 
-
-    // FIXME: remove old method
-    handleTimerAction() {
-        let taskTimer = {};
+        updateTaskName(event.target.value || '');
     };
 
     handleTimerStart() {
-        this.setState({
-            isTimerActive: true,
-            taskTimer: {
-                start: DateTime.local(),
-            },
+        const { timer, startTimer } = this.props;
+
+        startTimer({
+            name: timer.name || '',
+            start: DateTime.local(),
         });
     }
 
     handleTimerStop() {
-        const { addTaskToLog } = this.props;
-        const { taskName, taskTimer } = this.state;
+        const { timer = {}, stopTimer, addTaskToLog } = this.props;
+        // const { taskName, taskTimer } = this.state;
 
-        if (!taskName || taskName.length === 0) {
+        if (!timer.name || String(timer.name).trim().length === 0) {
             this.handleEmptyTaskError();
             return false;
         }
 
-        const timerEndTime = DateTime.local();
-
-        this.setState({
-            isTimerActive: false,
-            taskTimer: {},
-            taskName: '',
-        });
+        stopTimer();
 
         addTaskToLog({
             id: this.getTaskNextId(),
-            name: taskName,
-            start: taskTimer.start,
-            end: timerEndTime,
+            name: timer.name,
+            start: timer.startDateTime,
+            end: DateTime.local(),
         });
     }
 
@@ -94,8 +84,7 @@ class TimerTask extends Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const { isTimerActive, taskTimer, taskName } = this.state;
+        const { timer = {}, classes } = this.props;
 
         return (
             <div className={classes.timerContainer}>
@@ -104,29 +93,25 @@ class TimerTask extends Component {
                         id="task-name"
                         label='Name of your task'
                         placeholder='Name of your task'
-                        value={taskName}
-                        onChange={this.handleChange('taskName')}
+                        value={timer.name}
+                        onChange={this.handleTaskNameChange}
                         className={classes.textInput}
                     />
                 </div>
                 <div>
-                    <div>
-                        <Timer
-                            isTimerActive={!!isTimerActive}
-                            startDateTime={taskTimer && taskTimer.start}
-                        />
-                    </div>
-                    {/*FIXME: remove code below*/}
-                    {/*{ `${taskTimer.start || '...'} - ${taskTimer.end || '...'}` }*/}
+                    <Timer
+                        isTimerActive={!!timer.isActive}
+                        startDateTime={timer.startDateTime}
+                    />
                 </div>
                 <div>
                     <Button
                         variant="contained"
-                        onClick={isTimerActive ? this.handleTimerStop : this.handleTimerStart }
+                        onClick={timer.isActive ? this.handleTimerStop : this.handleTimerStart }
                         className={classes.button}
                         size="small"
                     >
-                        { isTimerActive ? 'STOP' : 'START' }
+                        { timer.isActive ? 'STOP' : 'START' }
                     </Button>
                 </div>
             </div>
@@ -135,10 +120,14 @@ class TimerTask extends Component {
 }
 
 export default connect(
-    ({ task }) => ({
+    ({ task, timer }) => ({
+        timer: timer.timer,
         taskList: task.list,
     }),
     dispatch => ({
+        startTimer: timer => dispatch(startTimer(timer)),
+        updateTaskName: taskName => dispatch(updateName(taskName)),
+        stopTimer: () => dispatch(stopTimer()),
         addTaskToLog: task => dispatch(addTask(task)),
     }),
 )(withStyles(styles)(TimerTask));

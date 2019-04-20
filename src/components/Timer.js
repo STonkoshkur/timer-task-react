@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { DateTime, Interval, Duration } from 'luxon';
 
+/**
+ * Components
+ */
 import Fab from '@material-ui/core/Fab';
 
 /**
@@ -22,6 +25,8 @@ class Timer extends Component {
             intervalId: null,
             timeDuration,
         };
+
+        this.updateTimerValue = this.updateTimerValue.bind(this);
     }
 
     handleStateChange(name, value) {

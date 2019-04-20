@@ -58,17 +58,6 @@ class Home extends Component {
         this.handleStateChange('selectedTab', value);
     }
 
-    renderTabContent(tab) {
-        switch(tab) {
-            case HOMEPAGE_LOGS_TAB_VALUE:
-                return <TasksLogs />;
-            case HOMEPAGE_CHART_TAB_VALUE:
-                return 'CHART';
-            default:
-                return;
-        }
-    }
-
     handleAlertOpen() {
         this.handleStateChange('isAlertShown', true);
     }
@@ -90,7 +79,7 @@ class Home extends Component {
                     <Grid
                         item
                         xs={12}
-                        lg={9}
+                        lg={10}
                     >
                         <TimerTask
                             onEmtyTaskError={this.handleAlertOpen}
@@ -99,7 +88,7 @@ class Home extends Component {
                     <Grid
                         item
                         xs={12}
-                        lg={9}
+                        lg={10}
                     >
                         <section>
                             <AppBar position="relative">
@@ -125,7 +114,10 @@ class Home extends Component {
                                     />
                                 </Tabs>
                             </AppBar>
-                            { this.renderTabContent(selectedTab) }
+                            { selectedTab === HOMEPAGE_CHART_TAB_VALUE
+                                ? 'CHART'
+                                : <TasksLogs />
+                            }
                         </section>
                     </Grid>
                 </Grid>

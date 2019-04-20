@@ -24,7 +24,7 @@ import { withStyles } from "@material-ui/core";
 import styles from '../styles';
 
 function TasksLogs(props) {
-    const { taskList, removeTaskFromLog } = props;
+    const { taskList, removeTaskFromLog, classes } = props;
     const removeTask = (taskId) => () => removeTaskFromLog(taskId);
 
     return (
@@ -42,7 +42,14 @@ function TasksLogs(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {taskList.map(task => (
+                    { taskList.length === 0 && (
+                        <TableRow key="noData">
+                            <TableCell colSpan={7}>
+                                {'No tasks'}
+                            </TableCell>
+                        </TableRow>
+                    ) }
+                    { taskList.length > 0 && taskList.map(task => (
                         <TableRow key={task.id}>
                             <TableCell component="th" scope="row">
                                 {task.id}
@@ -67,6 +74,8 @@ function TasksLogs(props) {
                             <TableCell>
                                 <Button
                                     variant="contained"
+                                    className={classes.button}
+                                    size="small"
                                     component={RouterLink}
                                     to={`${ROUTERS.taskDetails}/${task.id}`}
                                 >
@@ -76,6 +85,8 @@ function TasksLogs(props) {
                             <TableCell>
                                 <Button
                                     variant="contained"
+                                    className={classes.button}
+                                    size="small"
                                     onClick={removeTask(task.id)}
                                 >
                                     Delete
