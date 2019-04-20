@@ -16,9 +16,19 @@ export function clearTasksList() {
     return { type: taskTypes.CLEAR_TASKS_LIST };
 }
 
+export function findTask(taskId) {
+    return { type: taskTypes.FIND_TASK_DETAILS, payload: taskId };
+}
+
+export function clearTaskDetails() {
+    return { type: taskTypes.CLEAR_TASK_DETAILS };
+}
+
 export default {
     addTask,
     removeTask,
     createTasksList,
     clearTasksList,
+    findTask,
+    clearTaskDetails,
 };

@@ -41,6 +41,15 @@ export default {
         textAlign: 'right',
         padding: '1rem 0',
     },
+    cardPageContainer: {
+        margin: '3rem 0',
+    },
+    justifyCenter: {
+        justifyContent: 'center',
+    },
+    textAlignLeft: {
+        textAlign: 'left',
+    },
     colors: {
         red: redColor,
         violet: violetColor,

@@ -2,6 +2,8 @@ export const ROUTERS = {
     taskDetails: '/tasks/details',
     tasksLogs: '/tasks/logs',
     tasksChart: '/tasks/chart',
+
+    notFound: '/not/found',
 };
 
 export const HOMEPAGE_TABS = {

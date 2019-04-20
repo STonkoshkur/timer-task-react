@@ -6,7 +6,8 @@ export const INITIAL_STATE = {
         name: '',
         startDateTime: null,
         endDateTime: null,
-        durationTime: null,
+        isLoading: false,
+        isFailed: false,
     },
     list: [],
 };
@@ -35,6 +36,31 @@ export default function reducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 list: INITIAL_STATE.list,
+            };
+
+        case taskTypes.FIND_TASK_DETAILS:
+            const foundTask = state.list
+                .find(task => task.id === Number(action.payload));
+
+            return {
+                ...state,
+                task: foundTask
+                    ? {
+                        ...INITIAL_STATE.task,
+                        id: foundTask.id,
+                        name: foundTask.name,
+                        startDateTime: foundTask.start,
+                        endDateTime: foundTask.end,
+                        isFailed: false,
+                    } : {
+                        ...INITIAL_STATE.task,
+                        isFailed: true,
+                    },
+            };
+        case taskTypes.CLEAR_TASK_DETAILS:
+            return {
+                ...state,
+                task: INITIAL_STATE.task,
             };
         default:
             return state;

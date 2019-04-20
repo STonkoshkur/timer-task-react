@@ -10,6 +10,7 @@ import { ROUTERS } from './helpers/constants';
  * Components
  */
 import Home from './components/Home';
+import TaskDetails from './components/TaskDetails';
 import NotFound from './components/NotFound';
 
 /**
@@ -29,7 +30,7 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               <Route path={ROUTERS.tasksLogs} component={Home} />
               <Route path={ROUTERS.tasksChart} component={Home} />
-              {/*<Route path="/tasks/:id" component={TaskDetails} />*/}
+              <Route path={`${ROUTERS.taskDetails}/:id`} component={TaskDetails} />
               <Route component={NotFound} />
             </Switch>
           </Router>
