@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DateTime } from 'luxon';
+import PropTypes from 'prop-types';
 
 import { addTask } from '../actions/task';
 import { startTimer, stopTimer, updateName } from '../actions/timer';
@@ -53,7 +54,6 @@ class TimerTask extends Component {
 
     handleTimerStop() {
         const { timer = {}, stopTimer, addTaskToLog } = this.props;
-        // const { taskName, taskTimer } = this.state;
 
         if (!timer.name || String(timer.name).trim().length === 0) {
             this.handleEmptyTaskError();
@@ -70,11 +70,10 @@ class TimerTask extends Component {
         });
     }
 
-    // FIXME: add prop-type validation
     handleEmptyTaskError() {
-        if (this.props.onEmtyTaskError) {
-            this.props.onEmtyTaskError();
-        }
+        const { onEmptyTaskError } = this.props;
+
+        onEmptyTaskError();
     }
 
     render() {
@@ -112,6 +111,15 @@ class TimerTask extends Component {
         );
     }
 }
+
+TimerTask.propTypes = {
+    onEmptyTaskError: PropTypes.func.isRequired,
+    timer: PropTypes.shape({
+        isActive: PropTypes.bool.isRequired,
+        name: PropTypes.string,
+    }),
+    taskList: PropTypes.array,
+};
 
 export default connect(
     ({ task, timer }) => ({

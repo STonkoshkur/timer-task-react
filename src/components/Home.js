@@ -82,7 +82,7 @@ class Home extends Component {
                         lg={10}
                     >
                         <TimerTask
-                            onEmtyTaskError={this.handleAlertOpen}
+                            onEmptyTaskError={this.handleAlertOpen}
                         />
                     </Grid>
                     <Grid

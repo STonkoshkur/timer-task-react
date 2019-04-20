@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DateTime, Interval, Duration } from 'luxon';
+import PropTypes from 'prop-types';
 
 /**
  * Components
@@ -90,6 +91,11 @@ class Timer extends Component {
             </Fab>
         );
     }
+};
+
+Timer.propTypes = {
+    isTimerActive: PropTypes.bool.isRequired,
+    startDateTime: PropTypes.instanceOf(DateTime).isRequired,
 };
 
 export default withStyles(styles)(Timer);

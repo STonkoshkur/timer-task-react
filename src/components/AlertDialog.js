@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Components
@@ -32,10 +33,7 @@ function AlertDialog(props) {
     } = props;
 
     function handleClose() {
-        // todo: add prop-types validation
-        if (props.onAlertClose) {
-            props.onAlertClose();
-        }
+        props.onAlertClose();
     }
 
     return (
@@ -70,5 +68,9 @@ function AlertDialog(props) {
         </Dialog>
     );
 }
+
+AlertDialog.propTypes = {
+    onAlertClose: PropTypes.func.isRequired,
+};
 
 export default withStyles(styles)(AlertDialog);
