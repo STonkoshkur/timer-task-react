@@ -2,6 +2,7 @@
   "name": "timer-track-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://stonkoshkur.github.io/timer-task-react",
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "luxon": "^1.12.1",
@@ -23,7 +24,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write src/**/*.js",
-    "lint": "eslint --debug src/"
+    "lint": "eslint --debug src/",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,6 +45,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "gh-pages": "^2.0.1",
     "prettier": "^1.17.0"
   }
 }
