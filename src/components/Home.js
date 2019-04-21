@@ -91,12 +91,17 @@ class Home extends Component {
                         lg={10}
                     >
                         <section>
-                            <AppBar position="relative">
+                            <AppBar
+                                position="relative"
+                                className={classes.tabsWrapper}
+                            >
                                 <Tabs
                                     onChange={this.handleTabChange}
                                     value={selectedTab}
-                                    className={classes.tabsWrapper}
                                     variant="fullWidth"
+                                    TabIndicatorProps={{
+                                        className: classes.tabsIndicator,
+                                    }}
                                 >
                                     <Tab
                                         label="Tasks logs"

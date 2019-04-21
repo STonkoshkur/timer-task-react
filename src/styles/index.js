@@ -1,7 +1,10 @@
 const redColor = '#bf2b5c';
+const pinkColor = '#ff4081';
 const violetColor = '#3248c7';
 const tealColor = '#01bcd5';
 const whiteColor = '#fff';
+
+const lightBlue = '#eaf6ff';
 
 export default {
     textInput: {
@@ -22,6 +25,10 @@ export default {
     },
     tabsWrapper: {
         background: tealColor,
+        boxShadow: 'none',
+    },
+    tabsIndicator: {
+        background: pinkColor,
     },
     tab: {
         background: tealColor,
@@ -44,15 +51,22 @@ export default {
     cardPageContainer: {
         margin: '3rem 0',
     },
+    tableRow: {
+        background: lightBlue,
+    },
     justifyCenter: {
         justifyContent: 'center',
     },
     textAlignLeft: {
         textAlign: 'left',
     },
+    textAlignCenter: {
+        textAlign: 'center',
+    },
     colors: {
         red: redColor,
         violet: violetColor,
         teal: tealColor,
+        pink: pinkColor,
     },
 };
