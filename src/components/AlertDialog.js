@@ -19,58 +19,53 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from '../styles';
 
 function Transition(props) {
-    return <Slide direction="up" {...props} />;
+  return <Slide direction="up" {...props} />;
 }
 
 function AlertDialog(props) {
-    const {
-        title,
-        message,
-        isShown,
-        closeButtonText = 'Close',
-        classes,
-        maxWidth = 'md',
-    } = props;
+  const {
+    title,
+    message,
+    isShown,
+    closeButtonText = 'Close',
+    classes,
+    maxWidth = 'md'
+  } = props;
 
-    function handleClose() {
-        props.onAlertClose();
-    }
+  function handleClose() {
+    props.onAlertClose();
+  }
 
-    return (
-        <Dialog
-            keepMounted
-            open={isShown}
-            TransitionComponent={Transition}
-            fullWidth={true}
-            maxWidth={maxWidth}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-slide-title"
-            aria-describedby="alert-dialog-slide-description"
-        >
-            <DialogTitle
-                id="alert-dialog-slide-title"
-                disableTypography
-            >
-                <h2 className={classes.alertTitle}>
-                    {title}
-                </h2>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
-                    {message}
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    {closeButtonText}
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
+  return (
+    <Dialog
+      open={isShown}
+      TransitionComponent={Transition}
+      maxWidth={maxWidth}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-slide-title"
+      aria-describedby="alert-dialog-slide-description"
+      keepMounted
+      fullWidth
+    >
+      <DialogTitle id="alert-dialog-slide-title" disableTypography>
+        <h2 className={classes.alertTitle}>{title}</h2>
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          {message}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          {closeButtonText}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 }
 
 AlertDialog.propTypes = {
-    onAlertClose: PropTypes.func.isRequired,
+  onAlertClose: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(AlertDialog);

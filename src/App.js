@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -8,9 +8,9 @@ import { ROUTERS } from './helpers/constants';
 /**
  * Components
  */
-import Home from './components/Home';
-import TaskDetails from './components/TaskDetails';
-import NotFound from './components/NotFound';
+import Home from './pages/Home';
+import TaskDetails from './pages/TaskDetails';
+import NotFound from './pages/NotFound';
 
 /**
  * Styles
@@ -19,8 +19,7 @@ import './App.css';
 
 const store = initStore();
 
-class App extends Component {
-  render() {
+function App() {
     return (
         <Provider store={store}>
           <div className="App">
@@ -37,7 +36,6 @@ class App extends Component {
       </Provider>
 
     );
-  }
 }
 
 export default App;
