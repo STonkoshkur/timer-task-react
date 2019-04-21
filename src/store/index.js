@@ -1,15 +1,14 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
-import rootSaga from './sagas';
 import initialState, { timer, task } from './initial-state';
 import reducers from './reducers';
+import rootSaga from './sagas';
 
 import BaseProxy from '../api/BaseProxy';
 
 function getPreloadedState() {
   const apiProxy = new BaseProxy();
-
   const cachedTimer = apiProxy.find('timer');
   const cachedTasksLog = apiProxy.find('tasksLog');
 

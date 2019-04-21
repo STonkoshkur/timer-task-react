@@ -1,16 +1,37 @@
-import { all, put, takeEvery, select } from 'redux-saga/effects'
+import { all, put, takeEvery, select, delay } from 'redux-saga/effects'
 
-import { taskTypes } from '../actions/types';
-import { setTaskDetails } from '../actions/task';
 import { task as INITIAL_STATE } from '../initial-state';
+import { taskTypes, timerTypes } from '../actions/types';
+import {
+    storeTask,
+    removeTaskFromList,
+    storeTasksList,
+    removeTasksList,
+    setTaskDetails,
+} from '../actions/task';
 
-const delay = (ms) => new Promise(res => setTimeout(res, ms));
+import {
+    storeTimer,
+    setTimerName,
+    removeTimer,
+} from '../actions/timer';
 
-// ...
+import BaseProxy from '../../api/BaseProxy';
 
-// Our worker Saga: will perform the async increment task
-export function* findTaskAsync(action) {
-    const { task : taskState } = yield select();
+/**
+ * Init api proxy instance
+ * @type {BaseProxy}
+ */
+const apiProxy = new BaseProxy();
+
+/**
+ * Fetch task details data with delay
+ *
+ * @param action
+ * @returns {IterableIterator<*>}
+ */
+export function* fetchTaskDetails(action) {
+    const { task: { list : tasksList } } = yield select();
     let taskDetails = INITIAL_STATE.task;
 
     yield put(setTaskDetails({
@@ -18,10 +39,9 @@ export function* findTaskAsync(action) {
         isLoading: true,
     }));
 
-
     yield delay(1000);
 
-    const foundTask = taskState.list.find(task => task.id === Number(action.payload));
+    const foundTask = tasksList.find(task => task.id === Number(action.payload));
 
     if (foundTask) {
         taskDetails = {
@@ -41,13 +61,94 @@ export function* findTaskAsync(action) {
     yield put(setTaskDetails(taskDetails));
 }
 
-// Our watcher Saga: spawn a new incrementAsync task on each INCREMENT_ASYNC
-export function* findTask() {
-    yield takeEvery(taskTypes.FIND_TASK_DETAILS, findTaskAsync);
+/**
+ * Create new task and save to localStorage
+ * @param action
+ * @returns {IterableIterator<*>}
+ */
+export function* handleTaskCreate(action) {
+    yield put(storeTask(action.payload));
+
+    const { task: { list : tasksList } } = yield select();
+    apiProxy.store('tasksLog', tasksList);
+}
+
+/**
+ * Remove task from logs and update localStorage value
+ * @param action
+ * @returns {IterableIterator<*>}
+ */
+export function* handleTaskRemove({ payload }) {
+    yield put(removeTaskFromList(payload));
+
+    const { task: { list : tasksList } } = yield select();
+    apiProxy.store('tasksLog', tasksList);
+}
+
+/**
+ * Create tasks logs and save it to localStorage
+ * @param action
+ * @returns {IterableIterator<*>}
+ */
+export function* handleTasksListCreate({ payload }) {
+    yield put(storeTasksList(payload));
+
+    const { task: { list : tasksList } } = yield select();
+    apiProxy.store('tasksLog', tasksList);
+}
+
+/**
+ * Remove tasks logs from state and localStorage
+ * @returns {IterableIterator<*>}
+ */
+export function* handleTasksListRemove() {
+    yield put(removeTasksList());
+    apiProxy.destroy('tasksLog');
+}
+
+/**
+ * Create new timer instance and save it to localStorage
+ * @returns {IterableIterator<*>}
+ */
+export function* handleTimerStart(action) {
+    yield put(storeTimer(action.payload));
+
+    const { timer: { timer } } = yield select();
+    apiProxy.store('timer', timer);
+}
+
+/**
+ * Update timer task name and update localStorage value
+ * @returns {IterableIterator<*>}
+ */
+export function* handleTimerNameUpdate(action) {
+    yield put(setTimerName(action.payload));
+
+    const { timer: { timer } } = yield select();
+    apiProxy.store('timer', timer);
+}
+
+/**
+ * Remove timer data from state and localStorage
+ * @returns {IterableIterator<*>}
+ */
+export function* handleTimerStop() {
+    yield put(removeTimer());
+    apiProxy.destroy('timer');
 }
 
 export default function* rootSaga() {
     yield all([
-        findTask(),
+        // Tasks actions:
+        takeEvery(taskTypes.FIND_TASK_DETAILS, fetchTaskDetails),
+        takeEvery(taskTypes.HANDLE_TASK_CREATE, handleTaskCreate),
+        takeEvery(taskTypes.HANDLE_TASK_REMOVE, handleTaskRemove),
+        takeEvery(taskTypes.HANDLE_TASKS_LIST_CREATE, handleTasksListCreate),
+        takeEvery(taskTypes.HANDLE_TASKS_LIST_REMOVE, handleTasksListRemove),
+
+        // Timer actions:
+        takeEvery(timerTypes.HANDLE_TIMER_START, handleTimerStart),
+        takeEvery(timerTypes.HANDLE_TIMER_NAME_UPDATE, handleTimerNameUpdate),
+        takeEvery(timerTypes.HANDLE_TIMER_STOP, handleTimerStop),
     ]);
 }

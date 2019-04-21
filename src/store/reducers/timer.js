@@ -3,10 +3,13 @@ import { timer as INITIAL_STATE } from '../initial-state';
 
 export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
-        case timerTypes.START_TIMER:
+        case timerTypes.STORE_TIMER:
             return {
                 ...state,
-                timer: action.payload,
+                timer: {
+                    ...action.payload,
+                    isActive: true,
+                },
             };
         case timerTypes.UPDATE_NAME:
             return {
@@ -16,7 +19,7 @@ export default function reducer(state = INITIAL_STATE, action) {
                     name: action.payload,
                 },
             };
-        case timerTypes.STOP_TIMER:
+        case timerTypes.REMOVE_TIMER:
             return {
                 ...state,
                 timer: INITIAL_STATE.timer,

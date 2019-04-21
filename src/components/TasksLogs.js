@@ -42,7 +42,10 @@ function TasksLogs(props) {
       </TableHead>
       <TableBody>
         {taskList.length === 0 && (
-          <TableRow key="noData" className={classes.tableRow}>
+          <TableRow
+              key="noData"
+              className={classes.tableRow}
+          >
             <TableCell colSpan={7} className={classes.textAlignCenter}>
               No tasks to show
             </TableCell>
@@ -50,7 +53,10 @@ function TasksLogs(props) {
         )}
         {taskList.length > 0 &&
           taskList.map(task => (
-            <TableRow key={task.id}>
+            <TableRow
+                key={task.id}
+                className={classes.tableRow}
+            >
               <TableCell component="th" scope="row">
                 {task.id}
               </TableCell>

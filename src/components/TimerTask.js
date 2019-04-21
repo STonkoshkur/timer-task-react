@@ -32,7 +32,9 @@ class TimerTask extends Component {
   getTaskNextId() {
     const { taskList } = this.props;
 
-    return taskList && taskList.length ? Number(taskList.length) + 1 : 1;
+    return taskList && taskList.length
+        ? Math.max(...taskList.map(task => task.id)) + 1
+        : 1;
   }
 
   handleTaskNameChange(event) {
