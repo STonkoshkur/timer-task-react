@@ -29,7 +29,7 @@ import { createTasksList, clearTasksList } from '../store/actions/task';
 import { getRandomValue } from '../helpers';
 import { RANDOM_TASKS } from '../helpers/constants';
 
-function getChartData(tasksList) {
+export function getChartData(tasksList) {
   const groupedTasks = [];
 
   for (let hour = 0; hour <= 23; hour += 1) {
@@ -57,9 +57,9 @@ function getChartData(tasksList) {
 
         if (taskStartDateTime.hour === hour && taskEndDateTime.hour === hour) {
           tasksMinutes = Interval.fromDateTimes(
-            taskStartDateTime,
-            taskEndDateTime
-          )
+              taskStartDateTime,
+              taskEndDateTime
+            )
             .toDuration('minutes')
             .toObject().minutes;
         } else if (taskEndDateTime.hour === hour) {
@@ -69,7 +69,7 @@ function getChartData(tasksList) {
         }
 
         return sum + Math.round(tasksMinutes);
-      }, tasksTimeSum);
+      }, 0);
     }
 
     groupedTasks.push({

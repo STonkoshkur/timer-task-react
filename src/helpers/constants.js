@@ -21,5 +21,5 @@ export const RANDOM_TASKS = {
   minBreakDuration: 5,
   maxBreakDuration: 30,
 
-  startHour: 8
+  startHour: 7,
 };
