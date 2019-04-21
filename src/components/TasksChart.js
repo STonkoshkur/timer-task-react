@@ -5,7 +5,7 @@ import { DateTime, Interval } from 'luxon';
 import { getRandomValue } from '../helpers';
 import { RANDOM_TASKS } from '../helpers/constants';
 
-import { createTasksList, clearTasksList } from '../actions/task';
+import { createTasksList, clearTasksList } from '../store/actions/task';
 
 /**
  * Components

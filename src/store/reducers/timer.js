@@ -1,12 +1,5 @@
 import { timerTypes } from '../actions/types';
-
-export const INITIAL_STATE = {
-    timer: {
-        isActive: false,
-        name: '',
-        startDateTime: null,
-    },
-};
+import { timer as INITIAL_STATE } from '../initial-state';
 
 export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {

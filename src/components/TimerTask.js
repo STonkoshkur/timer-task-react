@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { DateTime } from 'luxon';
 import PropTypes from 'prop-types';
 
-import { addTask } from '../actions/task';
-import { startTimer, stopTimer, updateName } from '../actions/timer';
+import { addTask } from '../store/actions/task';
+import { startTimer, stopTimer, updateName } from '../store/actions/timer';
 
 /**
  * Components

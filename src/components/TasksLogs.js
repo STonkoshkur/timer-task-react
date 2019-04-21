@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { removeTask } from '../actions/task';
+import { removeTask } from '../store/actions/task';
 
 import { Link as RouterLink } from 'react-router-dom';
 import { ROUTERS } from '../helpers/constants';

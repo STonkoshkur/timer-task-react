@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DateTime, Interval } from 'luxon';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
-import { findTask, clearTaskDetails } from '../actions/task';
+import { findTask, clearTaskDetails } from '../store/actions/task';
 import { ROUTERS } from '../helpers/constants';
 
 /**

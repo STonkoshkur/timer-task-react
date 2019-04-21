@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import reducers from './reducers';
+import initStore from './store';
 import { ROUTERS } from './helpers/constants';
 
 /**
@@ -18,7 +17,7 @@ import NotFound from './components/NotFound';
  */
 import './App.css';
 
-const store = createStore(reducers);
+const store = initStore();
 
 class App extends Component {
   render() {

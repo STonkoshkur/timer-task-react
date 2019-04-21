@@ -1,16 +1,5 @@
 import { taskTypes } from '../actions/types';
-
-export const INITIAL_STATE = {
-    task: {
-        id: 0,
-        name: '',
-        startDateTime: null,
-        endDateTime: null,
-        isLoading: false,
-        isFailed: false,
-    },
-    list: [],
-};
+import { task as INITIAL_STATE } from '../initial-state';
 
 export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
