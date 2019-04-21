@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/STonkoshkur/timer-task-react/precache-manifest.add0f05bc370a7bb13bb6f888f92cccc.js"
+  "/timer-task-react/precache-manifest.1d7c3347b4e2658e62c4bc7caf722141.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/STonkoshkur/timer-task-react/index.html", {
+workbox.routing.registerNavigationRoute("/timer-task-react/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
