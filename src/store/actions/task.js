@@ -20,6 +20,10 @@ export function findTask(taskId) {
     return { type: taskTypes.FIND_TASK_DETAILS, payload: taskId };
 }
 
+export function setTaskDetails(task) {
+    return { type: taskTypes.SET_TASK_DETAILS, payload: task };
+}
+
 export function clearTaskDetails() {
     return { type: taskTypes.CLEAR_TASK_DETAILS };
 }
@@ -30,5 +34,6 @@ export default {
     createTasksList,
     clearTasksList,
     findTask,
+    setTaskDetails,
     clearTaskDetails,
 };

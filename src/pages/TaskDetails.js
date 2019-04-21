@@ -12,6 +12,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 /**
  * Styles
@@ -59,29 +60,44 @@ class TaskDetails extends Component {
     return (
       <Grid container justify="center">
         <Grid item xs={12} md={6}>
-          <Card className={classes.cardPageContainer}>
-            <CardContent className={classes.textAlignLeft}>
-              <Typography color="textSecondary" variant="h5" gutterBottom>
-                {task.name}
-              </Typography>
-              <Typography>Time:</Typography>
-              <Typography color="textSecondary">
-                {`${taskStartDateTime} - ${taskEndDateTime}`}
-              </Typography>
-              <Typography>Duration:</Typography>
-              <Typography color="textSecondary">{taskDuration}</Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                className={classes.button}
-                size="small"
-                component={RouterLink}
-                to={ROUTERS.tasksLogs}
-              >
-                Go back
-              </Button>
-            </CardActions>
-          </Card>
+          {
+            task.isLoading
+            && (
+                <Card className={classes.cardPageContainer}>
+                  <CardContent>
+                    <CircularProgress />
+                  </CardContent>
+                </Card>
+            )
+          }
+          {
+            !task.isLoading
+            && (
+                <Card className={classes.cardPageContainer}>
+                  <CardContent className={classes.textAlignLeft}>
+                    <Typography color="textSecondary" variant="h5" gutterBottom>
+                      {task.name}
+                    </Typography>
+                    <Typography>Time:</Typography>
+                    <Typography color="textSecondary">
+                      {`${taskStartDateTime} - ${taskEndDateTime}`}
+                    </Typography>
+                    <Typography>Duration:</Typography>
+                    <Typography color="textSecondary">{taskDuration}</Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                        className={classes.button}
+                        size="small"
+                        component={RouterLink}
+                        to={ROUTERS.tasksLogs}
+                    >
+                      Go back
+                    </Button>
+                  </CardActions>
+                </Card>
+            )
+          }
         </Grid>
       </Grid>
     );

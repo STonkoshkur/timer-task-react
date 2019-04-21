@@ -1,7 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import reducers from './reducers';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './sagas';
 import initialState, { timer, task } from './initial-state';
+import reducers from './reducers';
 
 import BaseProxy from '../api/BaseProxy';
 
@@ -25,11 +27,17 @@ function getPreloadedState() {
 }
 
 export default function initStore() {
+  const sagaMiddleware = createSagaMiddleware();
+
   const store = createStore(
     reducers,
     getPreloadedState(),
-    composeWithDevTools(applyMiddleware())
+    composeWithDevTools(applyMiddleware(
+        sagaMiddleware,
+    ))
   );
+
+  sagaMiddleware.run(rootSaga);
 
   return store;
 }

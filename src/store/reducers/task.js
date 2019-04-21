@@ -27,24 +27,23 @@ export default function reducer(state = INITIAL_STATE, action) {
                 list: INITIAL_STATE.list,
             };
 
-        case taskTypes.FIND_TASK_DETAILS:
-            const foundTask = state.list
-                .find(task => task.id === Number(action.payload));
-
+        // case taskTypes.FIND_TASK_DETAILS:
+        case taskTypes.SET_TASK_DETAILS:
+            console.log('SET_TASK_DETAILS');
             return {
                 ...state,
-                task: foundTask
-                    ? {
-                        ...INITIAL_STATE.task,
-                        id: foundTask.id,
-                        name: foundTask.name,
-                        startDateTime: foundTask.start,
-                        endDateTime: foundTask.end,
-                        isFailed: false,
-                    } : {
-                        ...INITIAL_STATE.task,
-                        isFailed: true,
-                    },
+                task: action.payload,
+                    // ? {
+                    //     ...INITIAL_STATE.task,
+                    //     id: foundTask.id,
+                    //     name: foundTask.name,
+                    //     startDateTime: foundTask.start,
+                    //     endDateTime: foundTask.end,
+                    //     isFailed: false,
+                    // } : {
+                    //     ...INITIAL_STATE.task,
+                    //     isFailed: true,
+                    // },
             };
         case taskTypes.CLEAR_TASK_DETAILS:
             return {
