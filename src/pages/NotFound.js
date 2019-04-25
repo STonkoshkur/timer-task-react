@@ -17,7 +17,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import styles from '../styles';
 
-import { ROUTERS } from '../helpers/constants';
+import { ROUTES } from '../helpers/constants';
 
 function NotFound(props) {
   const { classes } = props;
@@ -39,7 +39,7 @@ function NotFound(props) {
               className={classes.button}
               size="small"
               component={RouterLink}
-              to={ROUTERS.tasksLogs}
+              to={ROUTES.tasksLogs}
             >
               Homepage
             </Button>

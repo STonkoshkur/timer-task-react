@@ -21,7 +21,7 @@ import { withStyles } from '@material-ui/core';
 import styles from '../styles';
 
 import { findTask, clearTaskDetails } from '../store/actions/task';
-import { ROUTERS } from '../helpers/constants';
+import { ROUTES } from '../helpers/constants';
 
 class TaskDetails extends Component {
   componentDidMount() {
@@ -42,7 +42,7 @@ class TaskDetails extends Component {
     const { task, classes } = this.props;
 
     if (task.isFailed) {
-      return <Redirect to={ROUTERS.notFound} />;
+      return <Redirect to={ROUTES.notFound} />;
     }
 
     let taskStartDateTime = DateTime.fromISO(task.startDateTime);
@@ -90,7 +90,7 @@ class TaskDetails extends Component {
                         className={classes.button}
                         size="small"
                         component={RouterLink}
-                        to={ROUTERS.tasksLogs}
+                        to={ROUTES.tasksLogs}
                     >
                       Go back
                     </Button>

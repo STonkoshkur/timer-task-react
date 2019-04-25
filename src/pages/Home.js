@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import {Link as RouterLink, Route, withRouter} from 'react-router-dom';
 
 /**
  * Components
@@ -20,7 +20,7 @@ import TasksChart from '../components/TasksChart';
  */
 import styles from '../styles';
 
-import { ROUTERS, HOMEPAGE_TABS } from '../helpers/constants';
+import { ROUTES, HOMEPAGE_TABS } from '../helpers/constants';
 
 class Home extends Component {
   constructor(props) {
@@ -30,13 +30,13 @@ class Home extends Component {
     const selectedTab =
       (location &&
         location.pathname &&
-        location.pathname === ROUTERS.tasksChart &&
+        location.pathname === ROUTES.tasksChart &&
         HOMEPAGE_TABS.chart) ||
       HOMEPAGE_TABS.logs;
 
     this.state = {
       selectedTab,
-      isAlertShown: false
+      isAlertShown: false,
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
@@ -89,22 +89,20 @@ class Home extends Component {
                     value={HOMEPAGE_TABS.logs}
                     className={classes.tab}
                     component={RouterLink}
-                    to={ROUTERS.tasksLogs}
+                    to={ROUTES.tasksLogs}
                   />
                   <Tab
                     label="Tasks chart"
                     value={HOMEPAGE_TABS.chart}
                     className={classes.tab}
                     component={RouterLink}
-                    to={ROUTERS.tasksChart}
+                    to={ROUTES.tasksChart}
                   />
                 </Tabs>
               </AppBar>
-              {selectedTab === HOMEPAGE_TABS.chart ? (
-                <TasksChart />
-              ) : (
-                <TasksLogs />
-              )}
+
+              <Route path={ROUTES.tasksChart} component={TasksChart} />
+              <Route path={ROUTES.tasksLogs} component={TasksLogs} />
             </section>
           </Grid>
         </Grid>

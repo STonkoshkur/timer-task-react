@@ -1,9 +1,9 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import initStore from './store';
-import { ROUTERS } from './helpers/constants';
+import { ROUTES } from './helpers/constants';
 
 /**
  * Components
@@ -25,10 +25,10 @@ function App() {
           <div className="App">
           <Router>
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path={ROUTERS.tasksLogs} component={Home} />
-              <Route path={ROUTERS.tasksChart} component={Home} />
-              <Route path={`${ROUTERS.taskDetails}/:id`} component={TaskDetails} />
+              <Route exact path="/" render={() => (<Redirect to={ROUTES.tasksLogs} />)} />
+              <Route path={ROUTES.tasksLogs} component={Home} />
+              <Route path={ROUTES.tasksChart} component={Home} />
+              <Route path={`${ROUTES.taskDetails}/:id`} component={TaskDetails} />
               <Route component={NotFound} />
             </Switch>
           </Router>

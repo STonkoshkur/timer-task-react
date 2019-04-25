@@ -14,11 +14,11 @@ export const timer = {
   timer: {
     isActive: false,
     name: '',
-    startDateTime: null
-  }
+    startDateTime: null,
+  },
 };
 
 export default {
   task,
-  timer
+  timer,
 };

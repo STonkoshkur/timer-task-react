@@ -1,14 +1,14 @@
-export const ROUTERS = {
+export const ROUTES = {
   taskDetails: '/tasks/details',
   tasksLogs: '/tasks/logs',
   tasksChart: '/tasks/chart',
 
-  notFound: '/not/found'
+  notFound: '/not/found',
 };
 
 export const HOMEPAGE_TABS = {
   logs: 'LOGS',
-  chart: 'CHART'
+  chart: 'CHART',
 };
 
 export const RANDOM_TASKS = {

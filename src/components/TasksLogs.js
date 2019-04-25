@@ -21,7 +21,7 @@ import { withStyles } from '@material-ui/core';
 import styles from '../styles';
 
 import { removeTask } from '../store/actions/task';
-import { ROUTERS } from '../helpers/constants';
+import { ROUTES } from '../helpers/constants';
 
 function TasksLogs(props) {
   const { taskList, removeTaskFromLog, classes } = props;
@@ -81,7 +81,7 @@ function TasksLogs(props) {
                   className={classes.button}
                   size="small"
                   component={RouterLink}
-                  to={`${ROUTERS.taskDetails}/${task.id}`}
+                  to={`${ROUTES.taskDetails}/${task.id}`}
                 >
                   Info
                 </Button>
