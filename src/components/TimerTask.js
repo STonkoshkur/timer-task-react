@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DateTime } from 'luxon';
+import {DateTime, Duration, Interval} from 'luxon';
 import PropTypes from 'prop-types';
 
 /**
@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
  */
 import TextField from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 
 /**
  * Styles
@@ -17,16 +18,48 @@ import styles from '../styles';
 
 import { addTask } from '../store/actions/task';
 import { startTimer, stopTimer, updateName } from '../store/actions/timer';
-import Timer from './Timer';
 
 class TimerTask extends Component {
   constructor(props) {
     super(props);
 
+    const { timer: { isActive: isTimerActive, startDateTime } } = props;
+
+    // calculate default timer duration
+    const timeDuration =
+        !!isTimerActive && startDateTime
+            ? Interval.fromDateTimes(
+                  DateTime.fromISO(startDateTime),
+                  DateTime.local()
+              ).toDuration()
+            : Duration.fromMillis(0);
+
+    this.state = {
+      intervalId: null,
+      timeDuration,
+    };
+
     this.handleTimerStart = this.handleTimerStart.bind(this);
     this.handleTimerStop = this.handleTimerStop.bind(this);
     this.handleTaskNameChange = this.handleTaskNameChange.bind(this);
     this.handleEmptyTaskError = this.handleEmptyTaskError.bind(this);
+    this.updateTimerValue = this.updateTimerValue.bind(this);
+  }
+
+  componentDidMount() {
+    const { timer: { isActive: isTimerActive } } = this.props;
+
+    if (isTimerActive) {
+      this.updateTimerStatus(isTimerActive);
+    }
+  }
+
+  componentWillUnmount() {
+    const { intervalId } = this.state;
+
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
   }
 
   getTaskNextId() {
@@ -35,6 +68,10 @@ class TimerTask extends Component {
     return taskList && taskList.length
         ? Math.max(...taskList.map(task => task.id)) + 1
         : 1;
+  }
+
+  handleStateChange(name, value) {
+    this.setState({ [name]: value });
   }
 
   handleTaskNameChange(event) {
@@ -50,6 +87,8 @@ class TimerTask extends Component {
       name: timer.name || '',
       start: DateTime.local().toISO()
     });
+
+    this.updateTimerStatus(true);
   }
 
   handleTimerStop() {
@@ -62,6 +101,8 @@ class TimerTask extends Component {
 
     stopTaskTimer();
 
+    this.updateTimerStatus(false);
+
     addTaskToLog({
       id: this.getTaskNextId(),
       name: timer.name,
@@ -72,6 +113,33 @@ class TimerTask extends Component {
     return true;
   }
 
+  updateTimerStatus(timerStatus) {
+    const { intervalId } = this.state;
+
+    if (timerStatus) {
+      const interval = setInterval(() => {
+        this.updateTimerValue();
+      }, 1000);
+
+      this.handleStateChange('intervalId', interval);
+    } else {
+      clearInterval(intervalId);
+      this.handleStateChange('timeDuration', Duration.fromMillis(0));
+    }
+  }
+
+  updateTimerValue() {
+    const { timer: { startDateTime } } = this.props;
+
+    this.handleStateChange(
+        'timeDuration',
+        Interval.fromDateTimes(
+            DateTime.fromISO(startDateTime),
+            DateTime.local()
+        ).toDuration()
+    );
+  }
+
   handleEmptyTaskError() {
     const { onEmptyTaskError } = this.props;
 
@@ -80,6 +148,11 @@ class TimerTask extends Component {
 
   render() {
     const { timer = {}, classes } = this.props;
+    const { timeDuration } = this.state;
+    const formattedTimeDuration =
+        timeDuration && timeDuration.isValid
+            ? timeDuration.toFormat('hh:mm:ss')
+            : '-';
 
     return (
       <div className={classes.timerContainer}>
@@ -94,10 +167,9 @@ class TimerTask extends Component {
           />
         </div>
         <div>
-          <Timer
-            isTimerActive={!!timer.isActive}
-            startDateTime={DateTime.fromISO(timer.startDateTime)}
-          />
+          <Fab className={classes.timerFab}>
+            {formattedTimeDuration}
+          </Fab>
         </div>
         <div>
           <Button
